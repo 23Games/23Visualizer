@@ -1,0 +1,69 @@
+ <!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>23Visualizer</title>
+    <link rel="stylesheet" href="visualizer.css">
+    <script src="visualizer.js"></script>
+
+  </head>
+
+  <body>
+    <canvas id="visualizer" width="800" height="300"></canvas>
+    <script>
+      //canvas stuf
+      var canvas = document.getElementById('visualizer'),
+       ctx = canvas.getContext('2d'),
+       width = canvas.width,
+       height = canvas.height,
+
+       x, h,    //x=position of sample h=hight of sample in %
+       runing = false,   //main loop boolean
+       sample_w=10,    //sample width
+       gap=5,    //gap betwean samples
+       samples=Math.floor(width/(sample_w+gap)),   //number ("int") of samples+gaps could fit in canvas
+       d_time=16;    //delay betwean iteration of main loop in miliseconds(ms)
+
+      function play_pause(){
+        if(runing){
+          runing=false;
+        } else{
+          runing=true;
+        }
+        loop();
+      }
+
+      function loop(){
+        if(runing){
+          test();
+          setTimeout(loop, 16);
+        }
+      }
+
+      function test(){
+        reset_();
+        ctx.fillStyle = "grey";
+        ctx.fillRect(0, 0, width, height);
+        for(var i=0;i<samples;i++){
+          rec(i*(sample_w+gap),Math.floor(Math.random() * (100 - 0)) + 0);
+        }
+      }
+
+      function rec(x,h){
+        ctx.fillStyle = "white";
+        ctx.fillRect(x, 300, sample_w, -height*h/100);
+      }
+
+      function reset_(){
+        ctx.clearRect(0, 0, width, height);
+      }
+
+      /*context.rect(15, 300, 10, -100);
+      context.fillStyle = 'red';
+      context.fill();*/
+
+    </script>
+     <button onclick="play_pause()" type="button">Play/Pause</button>
+  </body>
+
+</html>
