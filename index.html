@@ -9,20 +9,20 @@
   </head>
 
   <body>
-    <canvas id="visualizer" width="800" height="300"></canvas>
+    <canvas id="visualizer" width="1600" height="300"></canvas>
     <script>
       //canvas stuf
       var canvas = document.getElementById('visualizer'),
        ctx = canvas.getContext('2d'),
        width = canvas.width,
        height = canvas.height,
-
-       x, h,    //x=position of sample h=hight of sample in %
-       runing = false,   //main loop boolean
-       sample_w=10,    //sample width
-       gap=5,    //gap betwean samples
+       //data
+       x, h,                  //x=position of sample h=hight of sample in %
+       runing = false,        //main loop boolean
+       sample_w=15,           //sample width
+       gap=5,                 //gap betwean samples
        samples=Math.floor(width/(sample_w+gap)),   //number ("int") of samples+gaps could fit in canvas
-       d_time=16;    //delay betwean iteration of main loop in miliseconds(ms)
+       d_time=16;              //delay betwean iteration of main loop in miliseconds(ms)
 
       function play_pause(){
         if(runing){
@@ -51,7 +51,7 @@
 
       function rec(x,h){
         ctx.fillStyle = "white";
-        ctx.fillRect(x, 300, sample_w, -height*h/100);
+        ctx.fillRect(x, height, sample_w, -height*h/100);
       }
 
       function reset_(){
@@ -64,6 +64,9 @@
 
     </script>
      <button onclick="play_pause()" type="button">Play/Pause</button>
+     <audio src="grapes_-_I_dunno.mp3" autoplay>
+        Your browser does not support the <code>audio</code> element.
+    </audio>
   </body>
 
 </html>

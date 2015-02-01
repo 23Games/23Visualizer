@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+ <head>
+   <meta charset="UTF-8">
+   <title>23Visualizer</title>
+   <link rel="stylesheet" href="visualizer.css">
+
+
+ </head>
+
+ <body>
+   <canvas id="visualizer" width="1600" height="300"></canvas>
+   <input id="audio_file" type="file" accept="audio/*" />
+<audio id="audio_player" />
+   <script>
+     //canvas stuf
+
+     
+
+     var canvas = document.getElementById('visualizer'),
+      ctx = canvas.getContext('2d'),
+      width = canvas.width,
+      height = canvas.height;
+      var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      var analyser = audioCtx.createAnalyser();
+      var audioElement = document.createElement('audio');
+      audioElement.setAttribute('src', 'grapes_-_I_dunno.mp3');
+      audioElement.play();
+      analyser.fftSize = 256;
+      var bufferLength = analyser.frequencyBinCount;
+      console.log(bufferLength);
+      var dataArray = new Uint8Array(bufferLength);
+
+      ctx.clearRect(0, 0, width, height);
+
+      function draw() {
+        drawVisual = requestAnimationFrame(draw);
+
+        analyser.getByteFrequencyData(dataArray);
+
+        ctx.fillStyle = 'rgb(0, 0, 0)';
+        ctx.fillRect(0, 0, width, height);
+
+        var barWidth = (width / bufferLength) * 2.5;
+        var barHeight;
+        var x = 0;
+
+        for(var i = 0; i < bufferLength; i++) {
+          barHeight = dataArray[i];
+
+          ctx.fillStyle = 'rgb(' + (barHeight+100) + ',50,50)';
+          ctx.fillRect(x,height-barHeight/2,barWidth,barHeight/2);
+
+          x += barWidth + 1;
+        }
+      };
+
+      draw();
+   </script>
+    <button onclick="play_pause()" type="button">Play/Pause</button>
+
+ </body>
+
+</html>

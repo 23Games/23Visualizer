@@ -1,3 +1,6 @@
+body{
+  bgcolor: #272822;
+}
 canvas {
     border:1px dotted;
     float:center;
@@ -6,6 +9,6 @@ canvas {
     margin-left: auto;
     margin-right: auto;
     display: block;
-  
+
 
 }
