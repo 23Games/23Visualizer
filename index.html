@@ -4,22 +4,18 @@
     <meta charset="UTF-8">
     <title>23Visualizer</title>
     <link rel="stylesheet" href="visualizer.css">
-
-
   </head>
-
   <body>
     <canvas id="visualizer" width="1600" height="300"></canvas>
     <audio id="audio"src="grapes_-_I_dunno.mp3">
     Your browser does not support the <code>audio</code> element.
     </audio>
-
     <script>
 
     /*<audio id="audio"  src="http://s1.thekrzos.eu:8700/;stream.mp3" type="audio/mpeg" autoplay="" loop="" class="center-block" style="width: 100%">
     Twoja przeglądarka nie obsługuje HTML5.<br /><a href="http://www.browserchoice.eu/BrowserChoice/browserchoice_pl.htm">Wybierz najnowszą przeglądarkę</a>
   </audio>*/
-  
+
       //canvas stuf
       var canvas = document.getElementById('visualizer');
       var ctx = canvas.getContext('2d');
@@ -42,8 +38,6 @@
       var source = audioCtx.createMediaElementSource(myAudio);    //audio
       //var source = audioCtx.createMediaStreamSource(myAudio);     //stream
 
-
-
       var analyser = audioCtx.createAnalyser();
       analyser.minDecibels = -90;
       analyser.maxDecibels = -10;
@@ -55,9 +49,6 @@
       var dataArray = new Uint8Array(bufferLength);
       source.connect(analyser);
       analyser.connect(audioCtx.destination);
-
-
-
 
       function play_pause(){
         if(runing){
@@ -83,7 +74,7 @@
 
       function test(){
         reset_();
-        ctx.fillStyle = "grey";
+        ctx.fillStyle = "#15151C";
         ctx.fillRect(0, 0, width, height);
         for(var i=0;i<samples;i++){
           rec(i*(sample_w+gap),Math.floor(dataArray[i]/255*100));
@@ -91,7 +82,7 @@
       }
 
       function rec(x,h){
-        ctx.fillStyle = "white";
+        ctx.fillStyle = "#ffffff";
         ctx.fillRect(x, height, sample_w, -height*h/100);
       }
 
@@ -105,7 +96,5 @@
 
     </script>
      <button onclick="play_pause()" type="button">Play/Pause</button>
-
   </body>
-
 </html>
