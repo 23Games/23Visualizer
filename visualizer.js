@@ -44,11 +44,11 @@ function play_pause(){
   if(runing){
     runing=false;
     myAudio.pause();
-	myAudio.src='';
+	  myAudio.src='';
   } else{
     runing=true;
-	myAudio.src='http://s1.thekrzos.eu:8700/;stream.mp3';
-    myAudio.play();	
+	  myAudio.src='http://s1.thekrzos.eu:8700/;stream.mp3';
+    myAudio.play();
   }
   loop();
 }
