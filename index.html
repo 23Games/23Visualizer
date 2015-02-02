@@ -13,16 +13,16 @@
     <script>
       //canvas stuf
       var canvas = document.getElementById('visualizer'),
-       ctx = canvas.getContext('2d'),
-       width = canvas.width,
-       height = canvas.height,
-       //data
-       x, h,                  //x=position of sample h=hight of sample in %
-       runing = false,        //main loop boolean
-       sample_w=15,           //sample width
-       gap=5,                 //gap betwean samples
-       samples=Math.floor(width/(sample_w+gap)),   //number ("int") of samples+gaps could fit in canvas
-       d_time=16;              //delay betwean iteration of main loop in miliseconds(ms)
+      var ctx = canvas.getContext('2d');
+      var width = canvas.width;
+      var height = canvas.height;
+      //data
+      var x, h;                 //x=position of sample h=hight of sample in %
+      var runing = false ;      //main loop boolean
+      var sample_w=15;           //sample width
+      var gap=5;                 //gap betwean samples
+      var samples=Math.floor(width/(sample_w+gap));   //number ("int") of samples+gaps could fit in canvas
+      var d_time=16;              //delay betwean iteration of main loop in miliseconds(ms)
 
       function play_pause(){
         if(runing){
