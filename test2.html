@@ -100,7 +100,9 @@
      }
      function rec_chroma(x,h){
        ctx.fillStyle = ("hsl("+color.toString()+", 100%, 50%)");
-       ctx.fillRect(x, height, sample_w, -height*h/100);
+       ctx.fillRect(x, height/2, sample_w, -height/2*h/100);
+       ctx.fillStyle = ("hsl("+color.toString()+", 100%, 25%)");
+       ctx.fillRect(x, height/2, sample_w, height/2*h/100);
        color=color_rec(color);
      }
      function color_rec(a){
