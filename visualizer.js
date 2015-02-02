@@ -4,13 +4,12 @@ var ctx = canvas.getContext('2d');
 var width = canvas.width;
 var height = canvas.height;
 //data
-var x, h;                                       //x=position of sample h=hight of sample in %
+var x, h;                                       //x=position of sample ;h=hight of sample in %
 var runing = false ;                            //main loop boolean
 var sample_w=7;                                 //sample width
 var gap=2;                                      //gap betwean samples
 var samples=Math.floor(width/(sample_w+gap));   //number ("int") of samples+gaps could fit in canvas
 var d_time=16;                                  //delay betwean iteration of main loop in miliseconds(ms)
-var color=0;                                    //color
 var color_setp=Math.floor(360/samples);         //color steps
 var bgcolor="#15151C";                          //color of background canvas
 
@@ -18,8 +17,8 @@ var bgcolor="#15151C";                          //color of background canvas
 
 var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
-//var myAudio = document.querySelector('audio');            //audio
-var myAudio = document.getElementById('audio');             //stream
+//var myAudio = document.querySelector('audio');            //no idea
+var myAudio = document.getElementById('audio');             //wath is deffrence in these two nodes
 var pre = document.querySelector('pre');
 var myScript = document.querySelector('script');
 var source = audioCtx.createMediaElementSource(myAudio);    //audio and stream audio
@@ -55,11 +54,8 @@ function play_pause(){
 function loop(){
   if(runing){
     analyser.getByteFrequencyData(dataArray);
-    //for(var i = 0; i < bufferLength; i++) {
-      //console.log(dataArray[i]);
-      test();
-      setTimeout(loop, d_time);
-    //  }
+    test();
+    setTimeout(loop, d_time);
     }
   }
 
@@ -86,14 +82,4 @@ function rec_chroma(x,h,i){
   ctx.fillRect(x, height/2, sample_w, -height/2*h/100);
   ctx.fillStyle = ("hsl("+i.toString()+", 100%, 25%)");
   ctx.fillRect(x, height/2, sample_w, height/2*h/100);
-  //color=color_rec(color);
-}
-function color_rec(a){
-  if(a<samples){
-
-    a+=color_setp;
-  } else {
-    a=0;
-  }
-  return a;
 }
