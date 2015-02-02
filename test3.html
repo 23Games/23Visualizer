@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+ <head>
+   <meta charset="UTF-8">
+   <title>23Visualizer</title>
+   <link rel="stylesheet" href="visualizer.css">
+
+
+ </head>
+
+ <body>
+   <canvas id="visualizer" width="1600" height="300"></canvas>
+   <audio id="audio"src="grapes_-_I_dunno.mp3">
+   Your browser does not support the <code>audio</code> element.
+   </audio>
+   <script>
+
+
+
+     //canvas stuf
+     var canvas = document.getElementById('visualizer');
+     var ctx = canvas.getContext('2d');
+     var width = canvas.width;
+     var height = canvas.height;
+     //data
+     var x, h;                 //x=position of sample h=hight of sample in %
+     var runing = false ;      //main loop boolean
+     var sample_w=5;           //sample width
+     var gap=2;                 //gap betwean samples
+     var samples=Math.floor(width/(sample_w+gap));   //number ("int") of samples+gaps could fit in canvas
+     var d_time=16;              //delay betwean iteration of main loop in miliseconds(ms)
+     var color=0;
+
+      function loop(){
+
+
+          for(var i = 0; i < 10; i++) {
+            //console.log(dataArray[i]);
+            test();
+            color++;
+          }
+
+          setTimeout(loop, 1000);
+      }
+
+     function test(){
+       ctx.fillStyle = "grey";
+       ctx.fillRect(0, 0, width, height);
+       for(var i=0;i<samples;i++){
+         rec(i*(sample_w+gap),Math.floor(Math.random() * (100 - 0)) + 0);
+       }
+
+     }
+
+     function rec(x,h){
+       ctx.fillStyle = ("hsl("+color.toString()+", 100%, 50%)");
+       ctx.fillRect(x, height/2, sample_w, -height/2*h/100);
+       ctx.fillRect(x, height/2, sample_w, height/2*h/100);
+       color=color_rec(color);
+       //console.log(color.toString());
+     }
+       function color_rec(a){
+         if(a<360){
+           a++;
+         } else {
+           a=0;
+         }
+         return a;
+       }
+
+
+
+
+
+
+   </script>
+    <button onclick="loop()" type="button">test</button>
+
+ </body>
+
+</html>
