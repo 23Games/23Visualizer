@@ -47,8 +47,8 @@ function play_pause(){
 	myAudio.src='';
   } else{
     runing=true;
-    myAudio.play();
-	myAudio.src='http://s1.thekrzos.eu:8700/;stream.mp3';	
+	myAudio.src='http://s1.thekrzos.eu:8700/;stream.mp3';
+    myAudio.play();	
   }
   loop();
 }
