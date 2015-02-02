@@ -1,6 +1,9 @@
 body{
   background-color: #15151C;
 }
+h1{
+  text-align: center;
+}
 canvas {
     border:1px dotted;
     float:center;

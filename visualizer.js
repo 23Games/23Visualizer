@@ -10,7 +10,7 @@ var sample_w=7;                                 //sample width
 var gap=2;                                      //gap betwean samples
 var samples=Math.floor(width/(sample_w+gap));   //number ("int") of samples+gaps could fit in canvas
 var d_time=16;                                  //delay betwean iteration of main loop in miliseconds(ms)
-var color_setp=Math.floor(360/samples);         //color steps
+var color_setp=Math.floor(360/samples);         //steps color not in use now
 var bgcolor="#15151C";                          //color of background canvas
 
 //audio magic don't tauch :P
@@ -54,12 +54,12 @@ function play_pause(){
 function loop(){
   if(runing){
     analyser.getByteFrequencyData(dataArray);
-    test();
+    frame();
     setTimeout(loop, d_time);
     }
   }
 
-function test(){
+function frame(){
   reset_();
   ctx.fillStyle = bgcolor;
   ctx.fillRect(0, 0, width, height);
@@ -70,8 +70,12 @@ function test(){
 
 function rec(x,h){
   ctx.fillStyle = bgcolor;
-  ctx.fillRect(x, height/2, sample_w, -height/2*h/100);
-  ctx.fillRect(x, height/2, sample_w, height/2*h/100);
+  var rec_h=height/2*h/100;
+  if(rec_h==0){
+    rec_h=5;
+  }
+  ctx.fillRect(x, height/2, sample_w, -rec_h);
+  ctx.fillRect(x, height/2, sample_w, rec_h);
 }
 
 function reset_(){
