@@ -4,27 +4,32 @@ var ctx = canvas.getContext('2d');
 var width = canvas.width;
 var height = canvas.height;
 //data
-var x, h;                 //x=position of sample h=hight of sample in %
-var runing = false ;      //main loop boolean
-var sample_w=7;           //sample width
-var gap=2;                 //gap betwean samples
+var x, h;                                       //x=position of sample h=hight of sample in %
+var runing = false ;                            //main loop boolean
+var sample_w=7;                                 //sample width
+var gap=2;                                      //gap betwean samples
 var samples=Math.floor(width/(sample_w+gap));   //number ("int") of samples+gaps could fit in canvas
-var d_time=16;              //delay betwean iteration of main loop in miliseconds(ms)
-var color=0;               //color
-var color_setp=Math.floor(360/samples);
+var d_time=16;                                  //delay betwean iteration of main loop in miliseconds(ms)
+var color=0;                                    //color
+var color_setp=Math.floor(360/samples);         //color steps
+var bgcolor="#15151C";                          //color of background canvas
 
 //audio magic don't tauch :P
+
 var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-//var myAudio = document.querySelector('audio');//audio
-var myAudio = document.getElementById('audio');//stream
+
+//var myAudio = document.querySelector('audio');            //audio
+var myAudio = document.getElementById('audio');             //stream
 var pre = document.querySelector('pre');
 var myScript = document.querySelector('script');
-var source = audioCtx.createMediaElementSource(myAudio);    //audio
-//var source = audioCtx.createMediaStreamSource(myAudio);     //stream
+var source = audioCtx.createMediaElementSource(myAudio);    //audio and stream audio
+
 
 
 
 var analyser = audioCtx.createAnalyser();
+
+//soffting curves
 /*analyser.minDecibels = -90;
 analyser.maxDecibels = -10;
 analyser.smoothingTimeConstant = 0.85;*/
@@ -35,9 +40,6 @@ var bufferLength = analyser.frequencyBinCount;
 var dataArray = new Uint8Array(bufferLength);
 source.connect(analyser);
 analyser.connect(audioCtx.destination);
-
-
-
 
 function play_pause(){
   if(runing){
@@ -63,7 +65,7 @@ function loop(){
 
 function test(){
   reset_();
-  ctx.fillStyle = "grey";
+  ctx.fillStyle = bgcolor;
   ctx.fillRect(0, 0, width, height);
   for(var i=0;i<samples;i++){
     rec_chroma(i*(sample_w+gap),Math.floor(dataArray[i]/255*100),i);
@@ -71,7 +73,7 @@ function test(){
 }
 
 function rec(x,h){
-  ctx.fillStyle = "white";
+  ctx.fillStyle = bgcolor;
   ctx.fillRect(x, height/2, sample_w, -height/2*h/100);
   ctx.fillRect(x, height/2, sample_w, height/2*h/100);
 }
