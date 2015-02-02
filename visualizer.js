@@ -82,8 +82,12 @@ function reset_(){
   ctx.clearRect(0, 0, width, height);
 }
 function rec_chroma(x,h,i){
+  var rec_h=height/2*h/100;
+  if(rec_h==0){
+    rec_h=1;
+  }
   ctx.fillStyle = ("hsl("+i.toString()+", 100%, 50%)");
-  ctx.fillRect(x, height/2, sample_w, -height/2*h/100);
+  ctx.fillRect(x, height/2, sample_w, -rec_h);
   ctx.fillStyle = ("hsl("+i.toString()+", 100%, 25%)");
-  ctx.fillRect(x, height/2, sample_w, height/2*h/100);
+  ctx.fillRect(x, height/2, sample_w, rec_h);
 }

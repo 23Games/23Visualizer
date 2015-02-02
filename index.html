@@ -64,17 +64,16 @@
       function loop(){
         if(runing){
           analyser.getByteFrequencyData(dataArray);
-          for(var i = 0; i < bufferLength; i++) {
-            //console.log(dataArray[i]);
+
             test();
             setTimeout(loop, 16);
-            }
+
           }
         }
 
       function test(){
         reset_();
-        ctx.fillStyle = "#15151C";
+        ctx.fillStyle = "#565656";
         ctx.fillRect(0, 0, width, height);
         for(var i=0;i<samples;i++){
           rec(i*(sample_w+gap),Math.floor(dataArray[i]/255*100));
