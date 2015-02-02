@@ -10,10 +10,16 @@
 
   <body>
     <canvas id="visualizer" width="1600" height="300"></canvas>
-    <audio id="audio"  src="http://s1.thekrzos.eu:8700/;stream.mp3" type="audio/mpeg" autoplay="" loop="" class="center-block" style="width: 100%">
-		Twoja przeglądarka nie obsługuje HTML5.<br /><a href="http://www.browserchoice.eu/BrowserChoice/browserchoice_pl.htm">Wybierz najnowszą przeglądarkę</a>
-	</audio>
+    <audio id="audio"src="grapes_-_I_dunno.mp3">
+    Your browser does not support the <code>audio</code> element.
+    </audio>
+
     <script>
+
+    /*<audio id="audio"  src="http://s1.thekrzos.eu:8700/;stream.mp3" type="audio/mpeg" autoplay="" loop="" class="center-block" style="width: 100%">
+    Twoja przeglądarka nie obsługuje HTML5.<br /><a href="http://www.browserchoice.eu/BrowserChoice/browserchoice_pl.htm">Wybierz najnowszą przeglądarkę</a>
+  </audio>*/
+  
       //canvas stuf
       var canvas = document.getElementById('visualizer');
       var ctx = canvas.getContext('2d');
@@ -29,12 +35,12 @@
 
       //audio magic don't tauch :P
       var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      //var myAudio = document.querySelector('audio');
-      var myAudio = document.getElementById('glowny').play();
+      var myAudio = document.querySelector('audio');//audio
+      //var myAudio = document.getElementById('audio');//stream
       var pre = document.querySelector('pre');
       var myScript = document.querySelector('script');
-      //var source = audioCtx.createMediaElementSource(myAudio);    //audio
-      var s_source = audioCtx.createMediaStreamSource(myAudio);     //stream
+      var source = audioCtx.createMediaElementSource(myAudio);    //audio
+      //var source = audioCtx.createMediaStreamSource(myAudio);     //stream
 
 
 
@@ -47,7 +53,7 @@
       var bufferLength = analyser.frequencyBinCount;
         console.log(bufferLength);
       var dataArray = new Uint8Array(bufferLength);
-      s_source.connect(analyser);
+      source.connect(analyser);
       analyser.connect(audioCtx.destination);
 
 
