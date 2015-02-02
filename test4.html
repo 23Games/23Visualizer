@@ -46,9 +46,11 @@
 
 
      var analyser = audioCtx.createAnalyser();
+     /*
+     //audio smufer
      analyser.minDecibels = -90;
      analyser.maxDecibels = -10;
-     analyser.smoothingTimeConstant = 0.85;
+     analyser.smoothingTimeConstant = 0.85;*/
 
      analyser.fftSize = 256;
      var bufferLength = analyser.frequencyBinCount;
@@ -87,7 +89,7 @@
        ctx.fillStyle = "grey";
        ctx.fillRect(0, 0, width, height);
        for(var i=0;i<samples;i++){
-         rec(i*(sample_w+gap),Math.floor(dataArray[i]/255*100));
+         rec_chroma(i*(sample_w+gap),Math.floor(dataArray[i]/255*100));
        }
      }
 
@@ -99,7 +101,7 @@
   //console.log(color.toString());
 }*/
 
-     function rec(x,h){
+     function rec_chroma(x,h){
        ctx.fillStyle = ("hsl("+color.toString()+", 100%, 50%)");
        ctx.fillRect(x, height, sample_w, -height*h/100);
        color=color_rec(color);
@@ -110,7 +112,7 @@
      }
      function color_rec(a){
        if(a<360){
-         a++;
+         a+=5;
        } else {
          a=0;
        }
