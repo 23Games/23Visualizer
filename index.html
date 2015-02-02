@@ -4,15 +4,18 @@
     <meta charset="UTF-8">
     <title>23Visualizer</title>
     <link rel="stylesheet" href="visualizer.css">
-    <script src="visualizer.js"></script>
+
 
   </head>
 
   <body>
     <canvas id="visualizer" width="1600" height="300"></canvas>
+    <audio id="audio"  src="http://s1.thekrzos.eu:8700/;stream.mp3" type="audio/mpeg" autoplay="" loop="" class="center-block" style="width: 100%">
+		Twoja przeglądarka nie obsługuje HTML5.<br /><a href="http://www.browserchoice.eu/BrowserChoice/browserchoice_pl.htm">Wybierz najnowszą przeglądarkę</a>
+	</audio>
     <script>
       //canvas stuf
-      var canvas = document.getElementById('visualizer'),
+      var canvas = document.getElementById('visualizer');
       var ctx = canvas.getContext('2d');
       var width = canvas.width;
       var height = canvas.height;
@@ -24,28 +27,60 @@
       var samples=Math.floor(width/(sample_w+gap));   //number ("int") of samples+gaps could fit in canvas
       var d_time=16;              //delay betwean iteration of main loop in miliseconds(ms)
 
+      //audio magic don't tauch :P
+      var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      //var myAudio = document.querySelector('audio');
+      var myAudio = document.getElementById('glowny').play();
+      var pre = document.querySelector('pre');
+      var myScript = document.querySelector('script');
+      //var source = audioCtx.createMediaElementSource(myAudio);    //audio
+      var s_source = audioCtx.createMediaStreamSource(myAudio);     //stream
+
+
+
+      var analyser = audioCtx.createAnalyser();
+      analyser.minDecibels = -90;
+      analyser.maxDecibels = -10;
+      analyser.smoothingTimeConstant = 0.85;
+
+      analyser.fftSize = 256;
+      var bufferLength = analyser.frequencyBinCount;
+        console.log(bufferLength);
+      var dataArray = new Uint8Array(bufferLength);
+      s_source.connect(analyser);
+      analyser.connect(audioCtx.destination);
+
+
+
+
       function play_pause(){
         if(runing){
           runing=false;
+          myAudio.pause()
         } else{
           runing=true;
+          myAudio.play()
         }
         loop();
       }
 
       function loop(){
         if(runing){
-          test();
-          setTimeout(loop, 16);
+          analyser.getByteFrequencyData(dataArray);
+          for(var i = 0; i < bufferLength; i++) {
+            //console.log(dataArray[i]);
+            test();
+            setTimeout(loop, 16);
+            }
+          }
         }
-      }
 
       function test(){
         reset_();
         ctx.fillStyle = "grey";
         ctx.fillRect(0, 0, width, height);
         for(var i=0;i<samples;i++){
-          rec(i*(sample_w+gap),Math.floor(Math.random() * (100 - 0)) + 0);
+          rec(i*(sample_w+gap),Math.floor(dataArray[i]/255*100));
         }
       }
 
@@ -64,9 +99,7 @@
 
     </script>
      <button onclick="play_pause()" type="button">Play/Pause</button>
-     <audio src="grapes_-_I_dunno.mp3" autoplay>
-        Your browser does not support the <code>audio</code> element.
-    </audio>
+
   </body>
 
 </html>
