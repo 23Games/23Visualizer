@@ -5,11 +5,17 @@ h1{
   text-align: center;
 }
 canvas {
-    border:1px dotted;
+    width:100%;
+    height:100%;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    z-index: -1;
+    /*border:1px dotted;
     float:center;
     padding-left: 0;
     padding-right: 0;
     margin-left: auto;
-    margin-right: auto;
+    margin-right: auto;*/
     display: block;
 }

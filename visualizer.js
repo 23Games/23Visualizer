@@ -10,7 +10,7 @@ var sample_w=7;                                 //sample width
 var gap=2;                                      //gap betwean samples
 var samples=Math.floor(width/(sample_w+gap));   //number ("int") of samples+gaps could fit in canvas
 var d_time=16;                                  //delay betwean iteration of main loop in miliseconds(ms)
-var color_setp=Math.floor(360/samples);         //steps color not in use now
+var color_setp=20;//Math.floor(360/samples);         //steps color not in use now
 var bgcolor="#15151C";                          //color of background canvas
 
 //audio magic don't tauch :P
@@ -22,7 +22,7 @@ var myAudio = document.getElementById('audio');             //what is deffrence 
 var pre = document.querySelector('pre');
 var myScript = document.querySelector('script');
 var source = audioCtx.createMediaElementSource(myAudio);    //audio and stream audio
-
+var audiosrc=audio.src;
 
 
 
@@ -33,7 +33,7 @@ var analyser = audioCtx.createAnalyser();
 analyser.maxDecibels = -10;
 analyser.smoothingTimeConstant = 0.85;*/
 
-analyser.fftSize = 512;
+analyser.fftSize = 64;
 var bufferLength = analyser.frequencyBinCount;
   console.log(bufferLength);
 var dataArray = new Uint8Array(bufferLength);
@@ -44,10 +44,10 @@ function play_pause(){
   if(runing){
     runing=false;
     myAudio.pause();
-	myAudio.src='';
+	  myAudio.src='';
   } else{
     runing=true;
-	myAudio.src=document.getElementById('audio');
+	  myAudio.src=audiosrc;
     myAudio.play();
   }
   loop();
