@@ -27,25 +27,23 @@ analyser.maxDecibels = -10;
 analyser.smoothingTimeConstant = 0.85;*/
 analyser.fftSize = 256;                        //analyser.fftSize/2==bufferLength
 var bufferLength = analyser.frequencyBinCount; //bufferLength==analyser.fftSize()/2
-  //console.log(bufferLength);//debug
+  console.log(bufferLength);//debug
 var dataArray = new Uint8Array(bufferLength);
 source.connect(analyser);
 analyser.connect(audioCtx.destination);
 //end of audio magic
 
-
 //data
 var samples=bufferLength;   //number ("int") of samples+gaps could fit in canvas
 var x, h;                                       //x=position of sample ;h=hight of sample in %
 var runing = false ;                            //main loop boolean
-var sample_w=7;                                 //sample width
 var gap=2;                                      //gap betwean samples
+var sample_w=Math.floor((width-((bufferLength-1)*gap))/bufferLength);                                 //sample width
+
 
 var d_time=16;                                  //delay betwean iteration of main loop in miliseconds(ms)
 var color_setp=20;//Math.floor(360/samples);    //steps color not in use now
 var bgcolor="#15151C";                          //color of background canvas
-
-
 
 function play_pause(){
   if(runing){
@@ -70,8 +68,8 @@ function loop(){
 
 function frame(){
   reset_(); //clear scren
-  /*
-  ctx.fillStyle = bgcolor;            //manual clear scren
+  /* //manual clear scren
+  ctx.fillStyle = bgcolor;
   ctx.fillRect(0, 0, width, height);*/
   for(var i=0;i<samples;i++){
     rec_chroma(i*(sample_w+gap),Math.floor(dataArray[i]/255*100),i);
