@@ -18,7 +18,7 @@ var bgcolor="#15151C";                          //color of background canvas
 var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
 //var myAudio = document.querySelector('audio');            //no idea
-var myAudio = document.getElementById('audio');             //wath is deffrence in these two nodes
+var myAudio = document.getElementById('audio');             //what is deffrence in these two nodes
 var pre = document.querySelector('pre');
 var myScript = document.querySelector('script');
 var source = audioCtx.createMediaElementSource(myAudio);    //audio and stream audio
@@ -47,7 +47,7 @@ function play_pause(){
 	myAudio.src='';
   } else{
     runing=true;
-	myAudio.src='http://s1.thekrzos.eu:8700/;stream.mp3';
+	myAudio.src=document.getElementById('audio');
     myAudio.play();
   }
   loop();
