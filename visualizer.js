@@ -25,7 +25,7 @@ var analyser = audioCtx.createAnalyser();
 /*analyser.minDecibels = -90;
 analyser.maxDecibels = -10;
 analyser.smoothingTimeConstant = 0.85;*/
-analyser.fftSize = 256;                        //analyser.fftSize/2==bufferLength
+analyser.fftSize = 32;                        //analyser.fftSize/2==bufferLength
 var bufferLength = analyser.frequencyBinCount; //bufferLength==analyser.fftSize()/2
   console.log(bufferLength);//debug
 var dataArray = new Uint8Array(bufferLength);
@@ -34,13 +34,10 @@ analyser.connect(audioCtx.destination);
 //end of audio magic
 
 //data
-var samples=bufferLength;   //number ("int") of samples+gaps could fit in canvas
 var x, h;                                       //x=position of sample ;h=hight of sample in %
 var runing = false ;                            //main loop boolean
 var gap=2;                                      //gap betwean samples
-var sample_w=Math.floor((width-((bufferLength-1)*gap))/bufferLength);                                 //sample width
-
-
+var sample_w=Math.floor((width-((bufferLength-1)*gap))/bufferLength);           //sample width
 var d_time=16;                                  //delay betwean iteration of main loop in miliseconds(ms)
 var color_setp=20;//Math.floor(360/samples);    //steps color not in use now
 var bgcolor="#15151C";                          //color of background canvas
@@ -71,7 +68,7 @@ function frame(){
   /* //manual clear scren
   ctx.fillStyle = bgcolor;
   ctx.fillRect(0, 0, width, height);*/
-  for(var i=0;i<samples;i++){
+  for(var i=0;i<bufferLength;i++){
     rec_chroma(i*(sample_w+gap),Math.floor(dataArray[i]/255*100),i);
   }
 }
@@ -94,8 +91,10 @@ function rec_chroma(x,h,i){     //draw rectangle; x-position on x axis; h-height
   if(rec_h==0){
     rec_h=1;
   }
-  ctx.fillStyle = ("hsl("+i.toString()+", 100%, 50%)");
+  var color=i*Math.floor(360/bufferLength);
+  console.log(color);
+  ctx.fillStyle = ("hsl("+color.toString()+", 100%, 50%)");
   ctx.fillRect(x, height/2, sample_w, -rec_h);
-  ctx.fillStyle = ("hsl("+i.toString()+", 100%, 25%)");
+  ctx.fillStyle = ("hsl("+color.toString()+", 100%, 25%)");
   ctx.fillRect(x, height/2, sample_w, rec_h);
 }
